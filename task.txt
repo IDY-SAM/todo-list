@@ -1,0 +1,76 @@
+task_lists = []
+
+def write_to_file(task):
+    with open("todo.txt", "a") as file:
+        file.write(task + "\n")
+    print("Task added:", task)
+
+def add_task(task):
+    task_lists.append({'task': task, 'completed': False})
+    write_to_file(str(task_lists))
+
+def mark_completed(task_index):
+    try:        
+        if task_index > -1 and task_index < len(task_lists):
+            task_lists[task_index]["completed"] = True
+            print(task_lists[task_index]["task"] + " marked as completed!")
+        else:
+            print("Task does not exist")
+    except:
+        print("Invalid task.")
+
+def delete_task(task_index):
+    try:
+        del task_lists[task_index]
+        print("Task deleted!")
+    except:
+        print("Invalid task.")
+
+def show_tasks():
+    print("Tasks from array:")
+    for task in task_lists:
+        print(task)
+
+    file = open("todo.txt", "r")
+    print("Tasks from file:")
+    for task in file:
+        print(task)
+
+def add():
+    while True:
+        choice = input("Add task or type exit to quit")
+        if choice == 'exit':
+            break
+        add_task(choice)
+
+def mark():
+    while True:
+        choice = input("input task index or type exit to quit")
+        if choice == 'exit':
+            break
+        else:
+            mark_completed(int(choice))
+
+def delete():
+    while True:
+        choice = input("input task index or type exit to quit")
+        if choice == 'exit':
+            break
+        else:
+            delete_task(choice)
+
+while True:
+    choice = input("select action: add, show, done, delete or exit to quit")
+
+    match choice:
+        case 'add':
+            add()
+        case 'show':
+            show_tasks()
+        case 'done':
+            mark()
+        case 'delete':
+            delete()
+        case _:
+            print('exiting')
+            break
